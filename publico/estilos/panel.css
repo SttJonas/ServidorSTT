@@ -1,0 +1,705 @@
+:root {
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:#e7edf5;
+  background:#0b1018;
+  font-synthesis:none;
+  --fondo:#0b1018;
+  --panel:#111925;
+  --panel-2:#151f2d;
+  --borde:#223043;
+  --texto:#e7edf5;
+  --muted:#8593a6;
+  --verde:#36d399;
+  --azul:#5b9cff;
+  --amarillo:#eeb84e
+}
+.punto-estado.sin-conexion {
+  background:#eeb84e;
+  box-shadow:0 0 0 4px #eeb84e19
+}
+.seguridad-icono.estado-inactivo {
+  background:#40351e;
+  color:#f2c157
+}
+.seguridad-icono.estado-no-disponible {
+  background:#27303d;
+  color:#8997a9
+}
+* {
+  box-sizing:border-box
+}
+[hidden] {
+  display:none !important
+}
+body {
+  margin:0;
+  background:var(--fondo);
+  color:var(--texto)
+}
+button {
+  font:inherit;
+  color:inherit;
+  border:0;
+  cursor:pointer
+}
+.aplicacion {
+  display:flex;
+  min-height:100vh
+}
+.barra-lateral {
+  position:sticky;
+  top:0;
+  width:252px;
+  display:flex;
+  flex-direction:column;
+  height:100vh;
+  height:100dvh;
+  overflow-y:auto;
+  padding:28px 16px 20px;
+  background:#0e151f;
+  border-right:1px solid #1b2737;
+  flex-shrink:0;
+  align-self:flex-start
+}
+.marca {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:0 12px 38px
+}
+.marca-icono {
+  width:36px;
+  height:36px;
+  display:grid;
+  place-items:center;
+  border-radius:11px;
+  background:linear-gradient(135deg,#4fa3ff,#4ad8a4);
+  font-size:20px;
+  font-weight:800;
+  color:#07131c
+}
+.marca strong {
+  display:block;
+  font-size:17px;
+  letter-spacing:.2px
+}
+.marca span,.perfil small {
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+  margin-top:2px
+}
+.navegacion-titulo,.eyebrow {
+  color:#6c7b8f;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1.4px;
+  text-transform:uppercase
+}
+.navegacion-titulo {
+  padding:0 12px;
+  margin:0 0 10px
+}
+.enlace-navegacion {
+  width:100%;
+  padding:11px 13px;
+  margin:2px 0;
+  display:flex;
+  align-items:center;
+  gap:13px;
+  text-align:left;
+  background:transparent;
+  color:#8997a9;
+  border-radius:8px;
+  font-size:13px
+}
+.enlace-navegacion span {
+  font-size:17px;
+  width:17px;
+  text-align:center
+}
+.enlace-navegacion:hover,.enlace-navegacion.activo {
+  background:#192536;
+  color:#eef5ff
+}
+.enlace-navegacion.activo {
+  box-shadow:inset 3px 0 var(--azul)
+}
+.estado-conexion {
+  display:flex;
+  gap:10px;
+  align-items:center;
+  padding:14px 12px;
+  margin-top:auto;
+  margin-bottom:16px;
+  border-top:1px solid var(--borde);
+  border-bottom:1px solid var(--borde)
+}
+.punto-estado,.pulso {
+  width:7px;
+  height:7px;
+  display:block;
+  background:var(--verde);
+  border-radius:50%;
+  box-shadow:0 0 0 4px #36d39919
+}
+.estado-conexion strong {
+  display:block;
+  font-size:11px;
+  font-weight:600
+}
+.estado-conexion span {
+  color:var(--muted);
+  font-size:10px
+}
+.perfil {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 10px;
+}
+.boton-perfil {
+  display:flex;
+  min-width:0;
+  flex:1;
+  align-items:center;
+  gap:10px;
+  padding:0;
+  background:transparent;
+  text-align:left
+}
+.avatar {
+  display:grid;
+  place-items:center;
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  background:#30405a;
+  background-position:center;
+  background-size:cover;
+  color:#9dc6ff;
+  overflow:hidden;
+  font-weight:700
+}
+.perfil-texto {
+  flex:1
+}
+.perfil-menu {
+  padding:6px 0 6px 6px;
+  background:transparent;
+  color:var(--muted);
+  font-size:10px
+}
+.contenido {
+  flex:1;
+  min-width:0;
+  padding:0 42px 48px
+}
+.contenido-seccion {
+  min-width:0
+}
+.cabecera {
+  height:107px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid #1b2737
+}
+.migas {
+  margin:0 0 7px;
+  color:#6e7c90;
+  font-size:11px
+}
+.migas span {
+  padding:0 8px;
+  color:#35465b
+}
+.cabecera h1 {
+  margin:0;
+  font-size:22px;
+  letter-spacing:-.3px
+}
+.cabecera-acciones {
+  display:flex;
+  align-items:center;
+  gap:10px
+}
+.etiqueta-entorno {
+  padding:5px 8px;
+  border:1px solid #8f701e;
+  border-radius:4px;
+  color:#e4b83e;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:1px
+}
+.boton-icono {
+  position:relative;
+  width:34px;
+  height:34px;
+  border-radius:8px;
+  background:var(--panel);
+  color:#99a9bc;
+  font-size:19px
+}
+.boton-icono:hover {
+  color:white;
+  background:#1a293c
+}
+.notificacion {
+  position:absolute;
+  top:7px;
+  right:7px;
+  width:5px;
+  height:5px;
+  background:#ec6d5d;
+  border-radius:50%
+}
+.boton-menu {
+  display:none
+}
+.aviso-demo {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:24px 0;
+  padding:12px 15px;
+  border:1px solid #2b4a6e;
+  background:#102033;
+  border-radius:8px;
+  color:#a9c4e7;
+  font-size:11px
+}
+.aviso-icono {
+  display:grid;
+  place-items:center;
+  width:18px;
+  height:18px;
+  border:1px solid #5799e5;
+  border-radius:50%;
+  color:#76b5ff;
+  font-weight:700
+}
+.aviso-demo div {
+  flex:1
+}
+.aviso-demo strong {
+  color:#d9eaff;
+  margin-right:6px
+}
+.aviso-demo button {
+  background:transparent;
+  color:#67809e;
+  font-size:19px
+}
+.saludo {
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  margin:29px 0 25px
+}
+.eyebrow {
+  margin:0 0 8px
+}
+.saludo h2 {
+  font-size:24px;
+  margin:0 0 5px
+}
+.saludo h2 span {
+  color:var(--azul)
+}
+.saludo p:not(.eyebrow) {
+  color:var(--muted);
+  font-size:12px;
+  margin:0
+}
+.insignia-salud {
+  display:flex;
+  gap:11px;
+  align-items:center;
+  padding:10px 14px;
+  border:1px solid #254536;
+  background:#10231e;
+  border-radius:8px
+}
+.insignia-salud.sin-conexion {
+  border-color:#5a4722;
+  background:#211d14
+}
+.insignia-salud .pulso {
+  margin-left:2px
+}
+.insignia-salud .pulso.sin-conexion {
+  background:var(--amarillo);
+  box-shadow:0 0 0 4px #eeb84e19
+}
+.insignia-salud strong,.insignia-salud b {
+  display:block;
+  font-size:10px
+}
+.insignia-salud b {
+  color:var(--verde);
+  font-size:12px;
+  margin-top:3px
+}
+.insignia-salud b.sin-conexion {
+  color:var(--amarillo)
+}
+.tarjetas-recursos {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:13px
+}
+.tarjeta-recurso,.panel {
+  min-width:0;
+  border:1px solid var(--borde);
+  background:var(--panel);
+  border-radius:9px
+}
+.tarjeta-recurso {
+  padding:17px
+}
+.tarjeta-cabecera,.detalle-recurso {
+  display:flex;
+  justify-content:space-between;
+  align-items:center
+}
+.tarjeta-cabecera {
+  color:#8d9caf;
+  font-size:11px
+}
+.icono-recurso {
+  font-size:19px
+}
+.cpu {
+  color:#b78aff
+}
+.ram {
+  color:#5cb4ff
+}
+.disco {
+  color:#48dca3
+}
+.docker {
+  color:#66aaff
+}
+.valor-recurso {
+  margin:13px 0 11px;
+  font-size:26px;
+  font-weight:700;
+  letter-spacing:-.8px
+}
+.valor-recurso span {
+  font-size:12px;
+  color:#8593a6;
+  font-weight:500;
+  letter-spacing:0
+}
+.valor-recurso .unidad-normal {
+  font-size:11px
+}
+.barra {
+  height:4px;
+  background:#263445;
+  border-radius:8px;
+  overflow:hidden
+}
+.barra i {
+  display:block;
+  width:0;
+  height:100%;
+  background:var(--azul);
+  border-radius:inherit
+}
+.tarjeta-recurso:nth-child(2) .barra i {
+  background:#5cb4ff
+}
+.tarjeta-recurso:nth-child(3) .barra i {
+  background:#48dca3
+}
+.tarjeta-recurso:nth-child(4) .barra i {
+  background:#9b7cff
+}
+.detalle-recurso {
+  margin-top:10px;
+  color:#718095;
+  font-size:10px
+}
+.detalle-recurso strong {
+  color:#a7b5c7;
+  font-weight:500
+}
+.texto-verde {
+  color:var(--verde)!important
+}
+.contenedor-vacio {
+  font-size:10px;
+  color:#7d8ba0;
+  margin:17px 0 15px
+}
+.rejilla-principal {
+  display:grid;
+  grid-template-columns:1.08fr .92fr;
+  align-items:stretch;
+  gap:13px;
+  margin-top:13px
+}
+.panel {
+  padding:19px
+}
+.panel-titulo {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start
+}
+.panel h3 {
+  font-size:13px;
+  margin:0 0 5px
+}
+.panel-titulo p {
+  font-size:10px;
+  color:#728196;
+  margin:0
+}
+.boton-enlace {
+  background:transparent;
+  color:#77affb;
+  font-size:10px
+}
+.boton-enlace span {
+  font-size:16px;
+  padding-left:5px
+}
+.estado-vacio {
+  text-align:center;
+  padding:38px 20px 27px;
+  border-top:1px solid #1d2b3b;
+  margin-top:17px
+}
+.icono-vacio {
+  display:grid;
+  place-items:center;
+  width:39px;
+  height:39px;
+  margin:0 auto 12px;
+  border:1px solid #38506d;
+  border-radius:11px;
+  color:#619cf1;
+  font-size:21px
+}
+.estado-vacio strong {
+  display:block;
+  font-size:12px
+}
+.estado-vacio p {
+  color:#728196;
+  font-size:10px;
+  max-width:260px;
+  line-height:1.5;
+  margin:7px auto 15px
+}
+.boton-primario {
+  background:#347fda;
+  padding:9px 13px;
+  border-radius:5px;
+  font-size:10px;
+  font-weight:600
+}
+.boton-primario:hover {
+  background:#4b97ef
+}
+.actividad-lista {
+  margin-top:21px
+}
+.actividad-item {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 0;
+  border-top:1px solid #1d2b3b
+}
+.actividad-icono {
+  display:grid;
+  place-items:center;
+  width:25px;
+  height:25px;
+  border-radius:7px;
+  font-size:12px
+}
+.actividad-icono.verde {
+  color:#4ce0a5;
+  background:#183d34
+}
+.actividad-icono.azul {
+  color:#6eaeff;
+  background:#1b3656
+}
+.actividad-icono.amarillo {
+  color:#f2c157;
+  background:#40351e
+}
+.actividad-item div {
+  flex:1
+}
+.actividad-item strong,.actividad-item span {
+  display: inline-grid;
+}
+.actividad-item strong {
+  font-size:10px;
+  font-weight:600
+}
+.actividad-item div span,.actividad-item time {
+  font-size:9px;
+  color:#728196;
+  margin-top:3px
+}
+.actividad-item time {
+  align-self:center
+}
+.rejilla-inferior {
+  display:grid;
+  grid-template-columns:1.08fr .92fr;
+  align-items:stretch;
+  gap:13px;
+  margin-top:13px
+}
+.datos-sistema {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+  margin-top:23px;
+  padding-top:18px;
+  border-top:1px solid #1d2b3b
+}
+.datos-sistema span,.datos-sistema strong {
+  display:block
+}
+.datos-sistema span {
+  color:#718095;
+  font-size:10px;
+  margin-bottom:5px
+}
+.datos-sistema strong {
+  font-size:11px;
+  font-weight:500
+}
+.seguridad-lista {
+  margin-top:18px;
+  border-top:1px solid #1d2b3b
+}
+.seguridad-lista div {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:11px 0;
+  border-bottom:1px solid #1d2b3b;
+  font-size:10px
+}
+.seguridad-lista div span:nth-child(2) {
+  flex:1
+}
+.seguridad-icono {
+  display:grid;
+  place-items:center;
+  width:19px;
+  height:19px;
+  border-radius:5px;
+  background:#183c32;
+  color:var(--verde)
+}
+.seguridad-lista strong {
+  font-weight:500;
+  color:var(--verde)
+}
+.seccion-placeholder {
+  text-align:center;
+  padding:110px 20px;
+  color:var(--muted)
+}
+.placeholder-icono {
+  font-size:40px;
+  color:var(--azul);
+  margin-bottom:15px
+}
+.seccion-placeholder h2 {
+  color:var(--texto);
+  font-size:22px
+}
+.seccion-placeholder p {
+  font-size:12px
+}
+@media(max-width:1050px) {
+  .contenido {
+    padding:0 25px 40px
+  }
+  .tarjetas-recursos {
+    grid-template-columns:repeat(2,1fr)
+  }
+}
+@media(max-width:720px) {
+  .barra-lateral {
+    position:fixed;
+    z-index:5;
+    left:-260px;
+    height:100vh;
+    transition:left .2s
+  }
+  .barra-lateral.abierta {
+    left:0
+  }
+  .contenido {
+    padding:0 16px 30px
+  }
+  .cabecera {
+    height:82px
+  }
+  .boton-menu {
+    display:block;
+    margin-right:13px;
+    background:transparent;
+    color:#9cacbf;
+    font-size:20px
+  }
+  .cabecera>div:first-of-type {
+    margin-right:auto
+  }
+  .cabecera h1 {
+    font-size:17px
+  }
+  .migas {
+    display:none
+  }
+  .cabecera-acciones .etiqueta-entorno {
+    display:none
+  }
+  .aviso-demo {
+    align-items:flex-start
+  }
+  .aviso-demo strong {
+    display:block;
+    margin-bottom:3px
+  }
+  .saludo {
+    align-items:flex-start;
+    gap:18px;
+    flex-direction:column
+  }
+  .insignia-salud {
+    align-self:stretch
+  }
+  .rejilla-principal,.rejilla-inferior {
+    grid-template-columns:1fr
+  }
+  .datos-sistema {
+    grid-template-columns:1fr
+  }
+  .tarjetas-recursos {
+    gap:9px
+  }
+  .tarjeta-recurso {
+    padding:13px
+  }
+  .valor-recurso {
+    font-size:22px
+  }
+}

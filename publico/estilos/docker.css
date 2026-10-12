@@ -1,0 +1,226 @@
+.seccion-docker {
+  margin-top:26px
+}
+.docker-panel {
+  min-width:0
+}
+.docker-encabezado {
+  align-items:center;
+  gap:18px
+}
+.docker-encabezado h3 {
+  font-size:15px
+}
+.docker-encabezado p {
+  margin-top:5px
+}
+.busqueda-contenedores {
+  width:min(100%,270px);
+  height:36px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:0 10px;
+  border:1px solid var(--borde);
+  border-radius:7px;
+  background:#0d141e;
+  color:#8190a4
+}
+.busqueda-contenedores span {
+  font-size:19px
+}
+.busqueda-contenedores input {
+  width:100%;
+  min-width:0;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:var(--texto);
+  font:inherit;
+  font-size:11px
+}
+.busqueda-contenedores input::placeholder {
+  color:#718095
+}
+.tabla-contenedores {
+  width:100%;
+  margin-top:22px;
+  overflow-x:auto;
+  border-top:1px solid #1d2b3b
+}
+.tabla-contenedores table {
+  width:100%;
+  min-width:680px;
+  border-collapse:collapse;
+  text-align:left
+}
+.tabla-contenedores th {
+  padding:12px 10px;
+  color:#718095;
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:.8px;
+  text-transform:uppercase
+}
+.tabla-contenedores td {
+  max-width:280px;
+  padding:14px 10px;
+  border-top:1px solid #1d2b3b;
+  color:#aab7c8;
+  font-size:10px;
+  overflow-wrap:anywhere
+}
+.tabla-contenedores td strong,.tabla-contenedores td small {
+  display:block
+}
+.tabla-contenedores td strong {
+  color:#e7edf5;
+  font-size:11px;
+  font-weight:600
+}
+.tabla-contenedores td small {
+  margin-top:4px;
+  color:#718095;
+  font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+  font-size:9px
+}
+.distintivo-contenedor {
+  display:inline-block;
+  padding:5px 8px;
+  border:1px solid #254536;
+  border-radius:12px;
+  background:#10231e;
+  color:var(--verde);
+  white-space:nowrap
+}
+.docker-cargando,.docker-vacio {
+  padding:34px 14px;
+  color:#8593a6;
+  font-size:11px;
+  text-align:center
+}
+.docker-nota {
+  margin:15px 0 0;
+  color:#718095;
+  font-size:10px
+}
+.tabla-contenedores .docker-nota {
+  text-align:left
+}
+@media(max-width:720px) {
+  .docker-panel {
+    padding:14px
+  }
+  .docker-encabezado {
+    align-items:stretch;
+    flex-direction:column
+  }
+  .busqueda-contenedores {
+    width:100%
+  }
+  .tabla-contenedores {
+    margin-top:16px
+  }
+}
+.tabla-contenedores td:last-child {
+  min-width:170px
+}
+.acciones-contenedor {
+  display:flex;
+  gap:6px;
+  align-items:center
+}
+.boton-accion-contenedor {
+  padding:6px 8px;
+  border:1px solid #314158;
+  border-radius:5px;
+  background:#172333;
+  color:#b9c7d9;
+  font-size:9px
+}
+.boton-accion-contenedor:hover {
+  border-color:#5b9cff;
+  color:#fff
+}
+.boton-accion-contenedor.accion-detener {
+  border-color:#68433b;
+  color:#ffac9c
+}
+.boton-accion-contenedor.accion-detener:hover {
+  background:#39211e
+}
+.contenedor-protegido {
+  color:#eeb84e;
+  font-size:9px
+}
+.dialogo-confirmacion {
+  width:min(100% - 32px,430px);
+  padding:0;
+  border:1px solid #304157;
+  border-radius:12px;
+  background:#111925;
+  color:var(--texto);
+  box-shadow:0 24px 80px #0009
+}
+.dialogo-confirmacion::backdrop {
+  background:#05080dcc;
+  backdrop-filter:blur(3px)
+}
+.dialogo-confirmacion form {
+  padding:25px
+}
+.dialogo-confirmacion .eyebrow {
+  margin:0 0 9px
+}
+.dialogo-confirmacion h2 {
+  margin:0 0 9px;
+  font-size:19px
+}
+.dialogo-confirmacion form>p:not(.eyebrow):not(.error-confirmacion) {
+  color:#a0adbf;
+  font-size:12px;
+  line-height:1.6
+}
+.dialogo-confirmacion label {
+  display:block;
+  margin:18px 0 7px;
+  color:#b3c0d1;
+  font-size:11px
+}
+.dialogo-confirmacion input {
+  width:100%;
+  height:40px;
+  padding:0 10px;
+  border:1px solid #34475e;
+  border-radius:6px;
+  background:#0d141e;
+  color:var(--texto);
+  font:inherit;
+  font-size:12px
+}
+.error-confirmacion {
+  min-height:18px;
+  color:#ff9289;
+  font-size:10px
+}
+.acciones-dialogo {
+  display:flex;
+  justify-content:flex-end;
+  gap:9px;
+  margin-top:17px
+}
+.acciones-dialogo button {
+  min-height:35px;
+  padding:8px 13px;
+  border-radius:6px;
+  font-size:10px
+}
+.boton-secundario {
+  border:1px solid #344256;
+  background:#151f2d;
+  color:#b5c2d3
+}
+.acciones-dialogo .boton-primario:disabled {
+  opacity:.45;
+  cursor:not-allowed
+}

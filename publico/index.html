@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Panel de administración del servidor Swatt." />
+    <title>Swatt | Resumen del servidor</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/estilos/panel.css" />
+    <link rel="stylesheet" href="/estilos/docker.css" />
+    <link rel="stylesheet" href="/estilos/proyectos.css" />
+    <link rel="stylesheet" href="/estilos/revision.css" />
+    <link rel="stylesheet" href="/estilos/administracion.css" />
+    <link rel="stylesheet" href="/estilos/tecnologias.css" />
+    <link rel="stylesheet" href="/estilos/consola.css" />
+    <link rel="stylesheet" href="/vendor/xterm.css" />
+  </head>
+  <body>
+    <div class="aplicacion">
+      <aside class="barra-lateral" id="barra-lateral">
+        <div class="marca">
+          <div class="marca-icono">S</div>
+          <div>
+            <strong>Swatt</strong>
+            <span>Panel del servidor</span>
+          </div>
+        </div>
+
+        <nav class="navegacion" aria-label="Navegación principal">
+          <p class="navegacion-titulo">Administración</p>
+          <button class="enlace-navegacion activo" data-seccion="resumen">
+            <span aria-hidden="true">⌂</span> Resumen
+          </button>
+          <button class="enlace-navegacion" data-seccion="proyectos">
+            <span aria-hidden="true">◈</span> Proyectos
+          </button>
+          <button class="enlace-navegacion" data-seccion="tecnologias">
+            <span aria-hidden="true">⌘</span> Lenguajes y bases
+          </button>
+          <button class="enlace-navegacion" data-seccion="docker" data-solo-admin>
+            <span aria-hidden="true">▣</span> Docker
+          </button>
+          <button class="enlace-navegacion" data-seccion="mantenimiento" data-solo-admin>
+            <span aria-hidden="true">↻</span> Mantenimiento
+          </button>
+          <button class="enlace-navegacion" data-seccion="terminal">
+            <span aria-hidden="true">›_</span> Terminal
+          </button>
+          <button class="enlace-navegacion" data-seccion="archivos">
+            <span aria-hidden="true">▤</span> Archivos
+          </button>
+          <button class="enlace-navegacion" data-seccion="usuarios">
+            <span aria-hidden="true">◎</span> Usuarios
+          </button>
+        </nav>
+
+        <div class="estado-conexion" data-solo-admin>
+          <span class="punto-estado" id="estado-punto"></span>
+          <div>
+            <strong id="estado-servidor">Conectando con el host</strong>
+            <span>Actualizado hace <span id="ultima-actualizacion">--</span></span>
+          </div>
+        </div>
+
+        <div class="perfil">
+          <button class="boton-perfil" id="boton-abrir-perfil" type="button" title="Abrir mi perfil">
+            <span class="avatar" id="avatar">A</span>
+            <span class="perfil-texto"><strong id="perfil-usuario">Administrador</strong><small>Mi perfil</small></span>
+          </button>
+          <button class="perfil-menu" id="boton-cerrar-sesion" type="button" title="Cerrar sesión">Salir</button>
+        </div>
+      </aside>
+
+      <main class="contenido">
+        <header class="cabecera">
+          <button class="boton-menu" id="boton-menu" aria-label="Abrir menú">☰</button>
+          <div>
+            <p class="migas">Servidor <span>/</span> <span id="migas-seccion">Resumen</span></p>
+            <h1 id="titulo-seccion">Resumen del servidor</h1>
+          </div>
+          <div class="cabecera-acciones" data-solo-admin>
+            <button class="boton-icono" title="Actualizar datos" id="boton-actualizar">↻</button>
+            <button class="boton-icono" title="Avisos del host" aria-label="Avisos del host" id="boton-notificaciones">♢<span class="notificacion"></span></button>
+          </div>
+        </header>
+
+        <section class="aviso-demo" id="aviso-demo" data-solo-admin>
+          <span class="aviso-icono">i</span>
+          <div><strong id="aviso-titulo">Conectando con el agente del host</strong><span id="aviso-mensaje">El panel mostrará métricas reales del Debian cuando el agente esté instalado.</span></div>
+          <button aria-label="Cerrar aviso" id="cerrar-aviso">×</button>
+        </section>
+
+        <section class="contenido-seccion" id="seccion-resumen">
+          <div class="saludo" id="saludo-resumen" data-solo-admin>
+            <div><p class="eyebrow" id="fecha-actual"></p><h2>Estado de <span id="nombre-host">Swatt</span></h2><p>Este es el estado actual de tu infraestructura.</p></div>
+            <div class="insignia-salud sin-conexion"><span class="pulso sin-conexion" id="pulso-salud"></span><div><strong>Monitor del host</strong><b class="sin-conexion" id="salud-estado">Sin conexión</b></div></div>
+          </div>
+
+          <div class="tarjetas-recursos" id="tarjetas-recursos" data-solo-admin>
+            <article class="tarjeta-recurso">
+              <div class="tarjeta-cabecera"><span>CPU</span><span class="icono-recurso cpu">⌁</span></div>
+              <div class="valor-recurso" id="cpu-valor">--<span>%</span></div><div class="barra"><i id="cpu-barra"></i></div><div class="detalle-recurso"><span>Uso actual</span><strong id="cpu-detalle">-- núcleos</strong></div>
+            </article>
+            <article class="tarjeta-recurso">
+              <div class="tarjeta-cabecera"><span>Memoria RAM</span><span class="icono-recurso ram">▥</span></div>
+              <div class="valor-recurso" id="ram-valor">--<span> MB</span></div><div class="barra"><i id="ram-barra"></i></div><div class="detalle-recurso"><span id="ram-total">De -- GB</span><strong id="ram-libre">-- GB libres</strong></div>
+            </article>
+            <article class="tarjeta-recurso">
+              <div class="tarjeta-cabecera"><span>Almacenamiento</span><span class="icono-recurso disco">◉</span></div>
+              <div class="valor-recurso" id="disco-valor">--<span>%</span></div><div class="barra"><i id="disco-barra"></i></div><div class="detalle-recurso"><span id="disco-total">De -- GB</span><strong id="disco-libre">-- GB libres</strong></div>
+            </article>
+            <article class="tarjeta-recurso">
+              <div class="tarjeta-cabecera"><span>Contenedores</span><span class="icono-recurso docker">▣</span></div>
+              <div class="valor-recurso" id="docker-valor">--<span class="unidad-normal"> activos</span></div><div class="contenedor-vacio" id="docker-detalle">Consultando Docker...</div><div class="detalle-recurso"><span>Docker Engine</span><strong id="docker-estado">● Consultando</strong></div>
+            </article>
+          </div>
+
+          <div class="rejilla-principal">
+            <article class="panel panel-proyectos">
+              <div class="panel-titulo">
+                <div>
+                  <h3>Proyectos recientes</h3>
+                  <p>Repositorios importados para revisar</p>
+                </div>
+                <button class="boton-enlace" id="ver-proyectos">
+                  Ver todos <span>→</span>
+                </button>
+              </div>
+              <div class="estado-vacio" id="resumen-proyectos-vacio">
+                <div class="icono-vacio">◈</div>
+                <strong>Aún no hay proyectos</strong>
+                <p>
+                  Importa un repositorio público de GitHub o GitLab para revisarlo antes de desplegarlo.
+                </p>
+                <button class="boton-primario" id="anadir-proyecto-resumen">
+                  ＋ Añadir proyecto
+                </button>
+              </div>
+              <div class="resumen-proyectos-lista" id="resumen-proyectos-lista" hidden></div>
+            </article>
+            <article class="panel panel-actividad" id="panel-actividad-resumen" data-solo-admin>
+              <div class="panel-titulo">
+                <div>
+                  <h3>Acceso y despliegue</h3>
+                  <p>Configuración de esta instancia</p>
+                </div>
+              </div>
+              <div class="actividad-lista">
+                <div class="actividad-item">
+                  <span class="actividad-icono verde">✓</span>
+                  <div>
+                    <strong>Panel del servidor</strong>
+                    <span>Servicios y proyectos</span>
+                  </div>
+                </div>
+                <div class="actividad-item">
+                  <span class="actividad-icono azul">↻</span>
+                  <div>
+                    <strong>Monitor del host</strong>
+                    <span id="actividad-monitor">Esperando agente de métricas</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+        </section>
+
+        <section class="contenido-seccion seccion-docker" id="seccion-docker" hidden>
+          <div class="panel docker-panel">
+            <div class="panel-titulo docker-encabezado">
+              <div><h3>Contenedores activos</h3><p id="docker-resumen">Consultando el estado informado por el agente del host.</p></div>
+              <label class="busqueda-contenedores"><span aria-hidden="true">⌕</span><input id="buscar-contenedor" type="search" placeholder="Buscar contenedor..." aria-label="Buscar contenedores" /></label>
+            </div>
+            <div class="tabla-contenedores" id="lista-contenedores" aria-live="polite">
+              <p class="docker-cargando">Consultando contenedores del servidor...</p>
+            </div>
+            <p class="docker-nota">Las acciones requieren escribir el nombre exacto del contenedor. El propio panel está protegido.</p>
+          </div>
+        </section>
+        <section class="contenido-seccion seccion-proyectos" id="seccion-proyectos" hidden>
+          <div class="panel proyectos-panel">
+            <div class="panel-titulo proyectos-encabezado">
+              <div><h3>Importar repositorio</h3><p>Solo se aceptan repositorios públicos HTTPS de GitHub o GitLab.</p></div>
+            </div>
+            <div class="proyectos-aviso"><strong>Importar no despliega</strong><span>El código y sus archivos Compose no se ejecutan. Primero quedarán disponibles para revisión.</span></div>
+            <form class="formulario-proyecto" id="formulario-proyecto">
+              <label for="proyecto-nombre">Nombre para mostrar</label>
+              <input id="proyecto-nombre" name="nombre" minlength="2" maxlength="60" autocomplete="off" required />
+              <label for="proyecto-repositorio">URL del repositorio</label>
+              <input id="proyecto-repositorio" name="repositorio" type="url" maxlength="300" placeholder="https://github.com/usuario/aplicacion" autocomplete="url" required />
+              <label for="proyecto-rama">Rama</label>
+              <input id="proyecto-rama" name="rama" value="main" maxlength="100" autocomplete="off" required />
+              <button class="boton-primario" id="boton-importar-proyecto" type="submit">Importar para revisar</button>
+            </form>
+            <p class="proyecto-mensaje" id="proyecto-mensaje" role="status" aria-live="polite"></p>
+          </div>
+          <div class="panel proyectos-panel proyectos-lista-panel">
+            <div class="panel-titulo"><div><h3>Proyectos importados</h3><p>Estado de origen y archivos Compose detectados</p></div></div>
+            <div class="proyectos-lista" id="lista-proyectos" aria-live="polite"><p class="proyectos-vacio">Consultando proyectos...</p></div>
+          </div>
+        </section>
+        <section class="contenido-seccion seccion-terminal" id="seccion-terminal" hidden>
+          <div class="panel terminal-panel">
+            <div class="panel-titulo terminal-cabecera">
+              <div>
+                <h3>Terminal Bash</h3>
+                <p>Sesión interactiva real, asociada únicamente al proyecto elegido.</p>
+              </div>
+              <span class="terminal-estado" id="terminal-estado" role="status" aria-live="polite">Desconectada</span>
+            </div>
+            <div class="terminal-controles">
+              <div class="campo-terminal">
+                <label for="terminal-proyecto">Proyecto propio</label>
+                <select id="terminal-proyecto">
+                  <option value="">Selecciona un proyecto</option>
+                </select>
+              </div>
+              <div class="acciones-terminal">
+                <button class="boton-primario" id="iniciar-terminal" type="button">Iniciar terminal</button>
+                <button class="boton-secundario" id="cerrar-terminal" type="button" disabled>Cerrar sesión</button>
+              </div>
+            </div>
+            <p class="terminal-aviso">
+              Bash, Git y gestores de paquetes funcionan en una sesión real. La red saliente está habilitada sin restricción de dominios; solo se monta este proyecto y no se expone el socket Docker ni el contenido de otros proyectos.
+            </p>
+            <div class="terminal-marco">
+              <div id="terminal-emulador" aria-label="Terminal interactiva"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="contenido-seccion seccion-archivos" id="seccion-archivos" hidden>
+          <div class="panel editor-panel">
+            <div class="panel-titulo">
+              <div>
+                <h3>Archivos del proyecto</h3>
+                <p>Explora y edita archivos independientemente de la terminal.</p>
+              </div>
+              <button class="boton-secundario" id="actualizar-archivos" type="button">Actualizar lista</button>
+            </div>
+            <div class="selector-archivos">
+              <label for="archivos-proyecto">Proyecto propio</label>
+              <select id="archivos-proyecto"><option value="">Selecciona un proyecto</option></select>
+            </div>
+            <div class="editor-ruta">
+              <label for="editor-directorio">Carpeta</label>
+              <input id="editor-directorio" value="." autocomplete="off" />
+              <button class="boton-secundario" id="abrir-directorio" type="button">Abrir</button>
+              <button class="boton-secundario" id="subir-carpeta-padre" type="button">Carpeta anterior</button>
+              <button class="boton-secundario" id="crear-directorio" type="button">Nueva carpeta</button>
+              <label class="boton-secundario editor-subida" for="subir-archivo">Subir archivos</label>
+              <input id="subir-archivo" type="file" multiple hidden />
+              <label class="boton-secundario editor-subida" for="subir-carpeta">Subir carpeta</label>
+              <input id="subir-carpeta" type="file" webkitdirectory directory multiple hidden />
+            </div>
+            <div class="editor-elementos" id="editor-elementos" aria-live="polite">
+              <p class="proyectos-vacio">Selecciona uno de tus proyectos.</p>
+            </div>
+            <label for="editor-ruta-archivo">Archivo abierto</label>
+            <input id="editor-ruta-archivo" autocomplete="off" readonly />
+            <textarea id="editor-contenido" rows="16" spellcheck="false" placeholder="Selecciona un archivo para editarlo."></textarea>
+            <div class="acciones-editor">
+              <button class="boton-primario" id="guardar-archivo" type="button" disabled>Guardar cambios</button>
+              <button class="boton-secundario" id="borrar-archivo" type="button" disabled>Borrar archivo</button>
+            </div>
+            <p class="proyecto-mensaje" id="mensaje-editor" role="status" aria-live="polite"></p>
+          </div>
+        </section>
+        <section class="contenido-seccion seccion-tecnologias" id="seccion-tecnologias" hidden>
+          <p class="mensaje-tecnologias" id="mensaje-tecnologias" role="status" aria-live="polite" hidden></p>
+          <div class="panel panel-tecnologias">
+            <div class="panel-titulo">
+              <div>
+                <h3>Estado de las aplicaciones</h3>
+                <p>Estado consultado desde el inventario y los contenedores gestionados del servidor.</p>
+              </div>
+              <button class="boton-enlace" id="actualizar-tecnologias" type="button">
+                Actualizar <span>↻</span>
+              </button>
+            </div>
+            <div class="lista-tecnologias-activas" id="lista-tecnologias-activas" aria-live="polite">
+              <p class="estado-tecnologias">Consultando proyectos y servicios...</p>
+            </div>
+          </div>
+          <div class="panel panel-tecnologias">
+            <div class="panel-titulo">
+              <div>
+                <h3>Servicios de bases de datos</h3>
+                <p>Crea bases para aplicaciones activas, consulta sus conexiones o elimina servicios archivados.</p>
+              </div>
+            </div>
+            <div class="lista-tecnologias-activas" id="lista-bases-datos" aria-live="polite">
+              <p class="estado-tecnologias">Consultando bases de datos...</p>
+            </div>
+          </div>
+          <div class="catalogos-tecnologias">
+            <details class="panel panel-tecnologias catalogo-desplegable">
+              <summary>
+                <span><strong>Perfiles de aplicación</strong><small>10 runtimes disponibles</small></span>
+                <span class="indicador-desplegable" aria-hidden="true">＋</span>
+              </summary>
+              <p class="descripcion-catalogo">Elige uno al desplegar un proyecto importado. El código se ejecuta en contenedores separados.</p>
+              <div class="rejilla-tecnologias" id="catalogo-runtimes"></div>
+            </details>
+            <details class="panel panel-tecnologias catalogo-desplegable">
+              <summary>
+                <span><strong>Motores de bases de datos</strong><small>4 servicios privados disponibles</small></span>
+                <span class="indicador-desplegable" aria-hidden="true">＋</span>
+              </summary>
+              <p class="descripcion-catalogo">Se crean desde Servicios de bases de datos y solo son accesibles en la red privada de su aplicación.</p>
+              <div class="rejilla-tecnologias" id="catalogo-bases-datos"></div>
+            </details>
+          </div>
+          <div class="panel panel-tecnologias nota-tecnologias">
+            <strong>Cómo se conectan los componentes</strong>
+            <p>
+              Cada aplicación se administra por separado. Edita sus archivos en Archivos, aplica los cambios desde
+              Proyectos y crea o consulta sus servicios de datos aquí, en Lenguajes y bases.
+            </p>
+          </div>
+        </section>
+        <section class="contenido-seccion seccion-administracion" id="seccion-mantenimiento" hidden>
+          <div class="panel panel-administracion">
+            <div class="panel-titulo">
+              <div>
+                <h3>Salud y mantenimiento</h3>
+                <p>Recursos, tiempo activo y avisos del sistema. Las acciones de limpieza con borrado no se ejecutan desde aquí.</p>
+              </div>
+              <button class="boton-enlace" data-actualizar-host type="button">
+                Actualizar <span>↻</span>
+              </button>
+            </div>
+            <div class="rejilla-administracion" id="panel-administracion-mantenimiento" aria-live="polite"><p class="estado-administracion">Cargando mantenimiento...</p></div>
+          </div>
+          <div class="panel panel-administracion panel-nota-administracion">
+            <strong>Protección de datos</strong>
+            <p>
+              La limpieza de imágenes y volúmenes puede eliminar información persistente. Revisa los volúmenes y realiza
+              backups verificados antes de cualquier operación de limpieza.
+            </p>
+          </div>
+        </section>
+        <section class="contenido-seccion seccion-administracion" id="seccion-usuarios" hidden>
+          <div class="panel panel-administracion">
+            <div class="panel-titulo">
+              <div>
+                <h3>Mi perfil</h3>
+                <p>Edita tu nombre visible y, si lo necesitas, cambia tu contraseña.</p>
+              </div>
+            </div>
+            <form class="formulario-perfil" id="formulario-perfil">
+              <label for="foto-perfil">Foto de perfil</label>
+              <div class="perfil-foto">
+                <span class="avatar avatar-grande" id="perfil-avatar">A</span>
+                <div class="perfil-foto-controles">
+                  <input id="foto-perfil" class="entrada-foto-perfil" type="file" accept="image/png,image/jpeg,image/webp" />
+                  <label class="boton-elegir-foto" for="foto-perfil">Elegir foto</label>
+                  <button class="boton-secundario" id="quitar-foto-perfil" type="button">Quitar foto</button>
+                  <small id="estado-foto-perfil" role="status" aria-live="polite">Consultando foto guardada...</small>
+                  <small>PNG, JPEG o WebP; máximo 512 KiB.</small>
+                </div>
+              </div>
+              <label for="perfil-nombre">Nombre visible</label>
+              <input id="perfil-nombre" name="nombre" required minlength="2" maxlength="60" autocomplete="name" />
+              <label for="perfil-nombre-usuario">Nombre de usuario</label>
+              <input id="perfil-nombre-usuario" name="usuario" autocomplete="username" readonly />
+              <label for="perfil-rol">Permisos</label>
+              <input id="perfil-rol" name="rol" autocomplete="off" readonly />
+              <label for="perfil-contrasena-actual">Contraseña actual <span>(solo para cambiarla)</span></label>
+              <input id="perfil-contrasena-actual" name="contrasenaActual" type="password" autocomplete="current-password" />
+              <label for="perfil-contrasena-nueva">Nueva contraseña <span>(mínimo 14 caracteres)</span></label>
+              <input id="perfil-contrasena-nueva" name="nuevaContrasena" type="password" autocomplete="new-password" minlength="14" maxlength="256" />
+              <div class="acciones-perfil">
+                <button class="boton-primario" id="guardar-perfil" type="submit">Guardar perfil</button>
+                <button class="boton-secundario" id="boton-cerrar-sesion-usuarios" type="button">Cerrar sesión</button>
+              </div>
+              <p class="mensaje-perfil" id="mensaje-perfil" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+          <div class="panel panel-administracion panel-cuentas" id="panel-gestion-cuentas" hidden>
+            <div class="panel-titulo">
+              <div>
+                <h3>Cuentas e invitaciones</h3>
+                <p>Elige el rol de cada invitación. Las invitaciones vencen en 24 horas y se usan una vez; comparte el enlace solo con la persona autorizada.</p>
+              </div>
+            </div>
+            <form class="formulario-invitacion" id="formulario-invitacion">
+              <label for="usuario-invitado">Usuario para invitar</label>
+              <input id="usuario-invitado" name="usuario" required maxlength="32" pattern="[a-zA-Z0-9._-]+" autocomplete="off" />
+              <label for="rol-invitado">Rol y permisos</label>
+              <select id="rol-invitado" name="rol" required>
+                <option value="operador">Operador · administra solo sus proyectos</option>
+                <option value="administrador">Administrador · acceso total al panel y a todos los proyectos</option>
+              </select>
+              <button class="boton-primario" id="crear-invitacion" type="submit">Crear invitación</button>
+            </form>
+            <p class="mensaje-perfil" id="mensaje-invitacion" role="status" aria-live="polite"></p>
+            <div class="resultado-invitacion" id="resultado-invitacion" hidden>
+              <label for="enlace-invitacion">Enlace de un solo uso · compártelo en privado</label>
+              <input id="enlace-invitacion" readonly />
+              <p>Este enlace se muestra aquí una sola vez. La invitación vence en 24 horas.</p>
+            </div>
+            <h4>Cuentas registradas</h4>
+            <div class="lista-cuentas" id="lista-cuentas" aria-live="polite">
+              <p class="estado-administracion">Cargando cuentas...</p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <dialog class="dialogo-confirmacion" id="dialogo-docker" aria-labelledby="dialogo-docker-titulo">
+      <form id="formulario-docker" method="dialog">
+        <p class="eyebrow">CONFIRMACIÓN DE ACCIÓN</p>
+        <h2 id="dialogo-docker-titulo">Confirmar acción</h2>
+        <p id="dialogo-docker-descripcion"></p>
+        <label for="confirmar-nombre">Escribe el nombre exacto del contenedor</label>
+        <input id="confirmar-nombre" autocomplete="off" required />
+        <p class="error-confirmacion" id="error-confirmacion" role="alert" aria-live="polite"></p>
+        <div class="acciones-dialogo">
+          <button class="boton-secundario" id="cancelar-accion" type="button">Cancelar</button>
+          <button class="boton-primario" id="confirmar-accion" type="submit" disabled>Confirmar</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog class="dialogo-compose" id="dialogo-compose" aria-labelledby="dialogo-compose-titulo">
+      <div class="dialogo-compose-contenido">
+        <p class="eyebrow">REVISIÓN · NO SE EJECUTA</p>
+        <h2 id="dialogo-compose-titulo">Archivo Compose</h2>
+        <pre id="dialogo-compose-texto"></pre>
+        <p class="proyecto-mensaje" id="dialogo-compose-error" role="alert" aria-live="polite"></p>
+        <button class="boton-secundario" id="cerrar-dialogo-compose" type="button">Cerrar</button>
+      </div>
+    </dialog>
+    <dialog class="dialogo-despliegue" id="dialogo-despliegue" aria-labelledby="dialogo-despliegue-titulo">
+      <form id="formulario-despliegue" method="dialog">
+        <p class="eyebrow">CONFIRMACIÓN · RUNTIME ADMINISTRADO</p>
+        <h2 id="dialogo-despliegue-titulo">Desplegar proyecto</h2>
+        <p id="dialogo-despliegue-descripcion"></p>
+        <ul class="detalles-despliegue">
+          <li>Elige un perfil administrado; cada perfil requiere archivos de entrada y configuración específicos.</li>
+          <li>Las imágenes base son fijas; los Dockerfile y Compose importados nunca se ejecutan.</li>
+          <li>La compilación y los recursos de cada servicio tienen límites.</li>
+          <li>C/C++ y Arduino son proyectos de compilación/firmware, no perfiles de alojamiento web.</li>
+        </ul>
+        <label for="perfil-runtime">Perfil de aplicación</label>
+        <select id="perfil-runtime" required>
+          <option value="html">HTML/CSS/JavaScript estático</option>
+          <option value="php">PHP 8.3 / Apache</option>
+          <option value="node">Node.js 22</option>
+          <option value="react">React (build estático)</option>
+          <option value="python">Python 3.12</option>
+          <option value="ruby">Ruby 3.3</option>
+          <option value="java">Java 21 / Maven</option>
+          <option value="kotlin">Kotlin / Maven</option>
+          <option value="go">Go</option>
+          <option value="rust">Rust</option>
+        </select>
+        <p class="ayuda-perfil-runtime" id="ayuda-perfil-runtime" aria-live="polite"></p>
+        <label for="confirmar-nombre-proyecto">Escribe el nombre exacto del proyecto</label>
+        <input id="confirmar-nombre-proyecto" autocomplete="off" required />
+        <p class="error-confirmacion" id="error-despliegue" role="alert" aria-live="polite"></p>
+        <div class="acciones-dialogo">
+          <button class="boton-secundario" id="cancelar-despliegue" type="button">Cancelar</button>
+          <button class="boton-primario" id="confirmar-despliegue" type="submit" disabled>Desplegar aplicación</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog class="dialogo-despliegue" id="dialogo-accion-php" aria-labelledby="dialogo-accion-php-titulo">
+      <form id="formulario-accion-php" method="dialog">
+        <p class="eyebrow">CONFIRMACIÓN · RUNTIME</p>
+        <h2 id="dialogo-accion-php-titulo">Acción de proyecto</h2>
+        <p id="dialogo-accion-php-descripcion"></p>
+        <label for="confirmar-nombre-accion-php">Escribe el nombre exacto del proyecto</label>
+        <input id="confirmar-nombre-accion-php" autocomplete="off" required />
+        <p class="error-confirmacion" id="error-accion-php" role="alert" aria-live="polite"></p>
+        <div class="acciones-dialogo">
+          <button class="boton-secundario" id="cancelar-accion-php" type="button">Cancelar</button>
+          <button class="boton-primario" id="confirmar-accion-php" type="submit" disabled>Confirmar acción</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog class="dialogo-despliegue" id="dialogo-gestion-proyecto" aria-labelledby="dialogo-gestion-proyecto-titulo">
+      <form id="formulario-gestion-proyecto" method="dialog">
+        <p class="eyebrow">CONFIRMACIÓN · APLICACIÓN</p>
+        <h2 id="dialogo-gestion-proyecto-titulo">Gestionar aplicación</h2>
+        <p id="dialogo-gestion-proyecto-descripcion"></p>
+        <label for="confirmar-nombre-gestion-proyecto">Escribe el nombre exacto del proyecto</label>
+        <input id="confirmar-nombre-gestion-proyecto" autocomplete="off" required />
+        <p class="error-confirmacion" id="error-gestion-proyecto" role="alert" aria-live="polite"></p>
+        <div class="acciones-dialogo">
+          <button class="boton-secundario" id="cancelar-gestion-proyecto" type="button">Cancelar</button>
+          <button class="boton-primario" id="confirmar-gestion-proyecto" type="submit" disabled>Confirmar</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog class="dialogo-despliegue" id="dialogo-base-datos" aria-labelledby="dialogo-base-datos-titulo">
+      <form id="formulario-base-datos" method="dialog">
+        <p class="eyebrow">SERVICIO PRIVADO · BASE DE DATOS</p>
+        <h2 id="dialogo-base-datos-titulo">Añadir base de datos</h2>
+        <p id="dialogo-base-datos-descripcion"></p>
+        <ul class="detalles-despliegue">
+          <li>La base solo será accesible desde la red privada de este proyecto; no se publican puertos.</li>
+          <li>Los datos persistirán en un volumen Docker separado del código.</li>
+          <li>El contenedor recibe <code>DATABASE_URL_FILE=/run/secrets/database-url</code>; tu app debe leer el archivo e incluir el controlador correspondiente.</li>
+          <li>Al crear la base se habilita el archivo secreto sin recrear el contenedor. Reinicia la aplicación para que su proceso vuelva a intentar la conexión.</li>
+          <li>La contraseña se guarda protegida en el servidor y solo se revela tras confirmar el nombre del proyecto.</li>
+          <li>El código editable se conserva en la carpeta de proyectos; los datos se guardan en un volumen Docker privado. El panel mostrará ambas rutas al terminar.</li>
+        </ul>
+        <label for="motor-base-datos">Motor</label>
+        <select id="motor-base-datos" required>
+          <option value="postgresql">PostgreSQL 17</option>
+          <option value="mariadb">MariaDB 11.4</option>
+          <option value="mongodb">MongoDB 8</option>
+          <option value="redis">Redis 7</option>
+        </select>
+        <label for="nombre-base-datos">Nombre de la base (letras minúsculas, números y _)</label>
+        <input id="nombre-base-datos" name="nombreBaseDatos" value="swatt" pattern="[a-z][a-z0-9_]{0,62}" maxlength="63" autocomplete="off" required />
+        <label for="confirmar-nombre-base-datos">Escribe el nombre exacto del proyecto</label>
+        <input id="confirmar-nombre-base-datos" autocomplete="off" required />
+        <p class="error-confirmacion" id="error-base-datos" role="alert" aria-live="polite"></p>
+        <pre id="resultado-base-datos" hidden></pre>
+        <div class="acciones-dialogo">
+          <button class="boton-secundario" id="cancelar-base-datos" type="button">Cancelar</button>
+          <button class="boton-primario" id="confirmar-base-datos" type="submit" disabled>Crear servicio</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog class="dialogo-despliegue" id="dialogo-credenciales-db" aria-labelledby="dialogo-credenciales-db-titulo">
+      <form id="formulario-credenciales-db" method="dialog">
+        <p class="eyebrow">CONFIRMACIÓN · CREDENCIAL PRIVADA</p>
+        <h2 id="dialogo-credenciales-db-titulo">Mostrar conexión de base de datos</h2>
+        <p id="dialogo-credenciales-db-descripcion"></p>
+        <label for="confirmar-nombre-credenciales-db">Escribe el nombre exacto del proyecto</label>
+        <input id="confirmar-nombre-credenciales-db" autocomplete="off" required />
+        <p class="error-confirmacion" id="error-credenciales-db" role="alert" aria-live="polite"></p>
+        <pre id="resultado-credenciales-db" hidden></pre>
+        <div class="acciones-dialogo">
+          <button class="boton-secundario" id="cancelar-credenciales-db" type="button">Cancelar</button>
+          <button class="boton-primario" id="confirmar-credenciales-db" type="submit" disabled>Mostrar credenciales</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog class="dialogo-compose" id="dialogo-notificaciones" aria-labelledby="dialogo-notificaciones-titulo">
+      <div class="dialogo-compose-contenido">
+        <p class="eyebrow">AVISOS · ESTADO REAL DEL HOST</p>
+        <h2 id="dialogo-notificaciones-titulo">Avisos del servidor</h2>
+        <div id="lista-notificaciones" class="lista-notificaciones" aria-live="polite"></div>
+        <button class="boton-secundario" id="cerrar-notificaciones" type="button">Cerrar</button>
+      </div>
+    </dialog>
+    <script type="module" src="/scripts/panel.js"></script>
+  </body>
+</html>

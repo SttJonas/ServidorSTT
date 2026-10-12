@@ -1,0 +1,21 @@
+# Dependencias instaladas localmente.
+node_modules/
+
+# Variables de entorno y credenciales que nunca deben subirse.
+.env
+.env.*
+!.env.example
+
+# Archivos generados por herramientas o por el sistema operativo.
+*.log
+.DS_Store
+Thumbs.db
+__pycache__/
+*.py[cod]
+
+# Conserva solo el marcador de la carpeta; no versiona repositorios importados.
+proyectos/*
+!proyectos/.gitkeep
+
+# Datos locales de autenticación cuando se ejecuta fuera de Docker.
+datos/

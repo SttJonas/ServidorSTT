@@ -1,0 +1,32 @@
+[Unit]
+Description=Agente de métricas y operaciones acotadas del host para el panel
+After=network-online.target docker.service tailscaled.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=panel
+SupplementaryGroups=docker
+ExecStart=/usr/bin/python3 /opt/swatt-monitor/monitor_host.py
+Environment=DIRECTORIO_PROYECTOS=/srv/panel/proyectos
+Restart=on-failure
+RestartSec=3
+RuntimeDirectory=swatt-monitor
+RuntimeDirectoryMode=0755
+StateDirectory=swatt-monitor
+StateDirectoryMode=0700
+ProtectSystem=strict
+ProtectHome=read-only
+PrivateTmp=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+ProtectKernelLogs=true
+NoNewPrivileges=true
+ReadWritePaths=/srv/panel/proyectos
+RestrictSUIDSGID=true
+RestrictAddressFamilies=AF_UNIX AF_NETLINK AF_INET
+LockPersonality=true
+
+[Install]
+WantedBy=multi-user.target

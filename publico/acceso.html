@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Iniciar sesión | Swatt</title>
+    <link rel="stylesheet" href="/estilos/acceso.css" />
+  </head>
+  <body>
+    <main class="tarjeta-acceso">
+      <div class="marca-acceso">
+        <div class="icono-acceso" aria-hidden="true">S</div>
+        <div><strong>Swatt</strong><span>Panel de administración del servidor</span></div>
+      </div>
+      <h1>Iniciar sesión</h1>
+      <p class="descripcion-acceso">Usa la cuenta que creó el administrador de este servidor.</p>
+      <form id="formulario-acceso">
+        <label for="usuario">Usuario</label>
+        <input id="usuario" name="usuario" autocomplete="username" required maxlength="32" />
+        <label for="contrasena">Contraseña</label>
+        <input id="contrasena" name="contrasena" type="password" autocomplete="current-password" required maxlength="256" />
+        <button id="boton-acceso" type="submit">Entrar al panel</button>
+        <p class="error-acceso" id="mensaje-error" role="alert" aria-live="polite"></p>
+      </form>
+      <div class="nota-acceso">El acceso requiere una cuenta existente. Las cuentas nuevas solo se crean mediante una invitación del administrador.</div>
+    </main>
+    <script src="/scripts/acceso.js" defer></script>
+  </body>
+</html>

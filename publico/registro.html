@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Aceptar invitación | Swatt</title>
+    <link rel="stylesheet" href="/estilos/acceso.css" />
+  </head>
+  <body>
+    <main class="tarjeta-acceso">
+      <div class="marca-acceso">
+        <div class="icono-acceso" aria-hidden="true">S</div>
+        <div><strong>Swatt</strong><span>Registro por invitación</span></div>
+      </div>
+      <h1 id="titulo-registro">Comprobando invitación</h1>
+      <p class="descripcion-acceso" id="descripcion-registro">
+        Los enlaces son personales, de un solo uso y vencen en 24 horas.
+      </p>
+      <form id="formulario-registro" class="oculto">
+        <label for="usuario-registro">Usuario asignado</label>
+        <input id="usuario-registro" readonly />
+        <label for="nombre-registro">Nombre visible</label>
+        <input id="nombre-registro" required minlength="2" maxlength="60" autocomplete="name" />
+        <label for="contrasena-registro">Crea una contraseña</label>
+        <input id="contrasena-registro" type="password" required minlength="14" maxlength="256" autocomplete="new-password" />
+        <label for="confirmar-contrasena-registro">Repite la contraseña</label>
+        <input id="confirmar-contrasena-registro" type="password" required minlength="14" maxlength="256" autocomplete="new-password" />
+        <button id="boton-registro" type="submit">Crear cuenta</button>
+        <p class="error-acceso" id="error-registro" role="alert" aria-live="polite"></p>
+      </form>
+      <a class="boton-acceso oculto" id="enlace-iniciar-sesion" href="/iniciar-sesion">Ir a iniciar sesión</a>
+      <div class="nota-acceso">No compartas este enlace. El administrador puede revocar tu cuenta en cualquier momento.</div>
+    </main>
+    <script src="/scripts/registro.js" defer></script>
+  </body>
+</html>

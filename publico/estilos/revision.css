@@ -1,0 +1,205 @@
+.proyecto-archivos-compose {
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:10px
+}
+.boton-ver-compose {
+  padding:6px 9px;
+  border:1px solid #314158;
+  border-radius:5px;
+  background:#172333;
+  color:#b9c7d9;
+  font-size:9px
+}
+.boton-ver-compose:hover {
+  border-color:#5b9cff;
+  color:#fff
+}
+.resumen-proyectos-lista .proyecto-archivos-compose,.resumen-proyectos-lista .proyecto-despliegue,.resumen-proyectos-lista .proyecto-tarjeta>code,.resumen-proyectos-lista .proyecto-tarjeta>span,.resumen-proyectos-lista .acciones-proyecto-php,.resumen-proyectos-lista .boton-desplegar-php,.resumen-proyectos-lista .boton-accion-proyecto {
+  display:none
+}
+.proyecto-despliegue {
+  margin:12px 0 6px;
+  color:#a9bacd;
+  font-size:10px;
+  line-height:1.6;
+  overflow-wrap:anywhere
+}
+.proyecto-tarjeta>code {
+  display:block;
+  margin-top:5px;
+  padding:7px;
+  border:1px solid #263549;
+  border-radius:5px;
+  background:#0a1018;
+  color:#c6d2e1;
+  font:9px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;
+  overflow-wrap:anywhere
+}
+.proyecto-tarjeta>span {
+  display:block;
+  margin-top:8px;
+  color:#9cacc0;
+  font-size:9px
+}
+.boton-desplegar-php {
+  margin-top:10px;
+  padding:7px 10px;
+  border:1px solid #34573f;
+  border-radius:5px;
+  background:#12251b;
+  color:#9fdbb7;
+  font-size:10px
+}
+.boton-desplegar-php:hover {
+  border-color:#60a77a;
+  color:#d1f4df
+}
+.acciones-proyecto-php {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:10px
+}
+.boton-accion-php {
+  padding:7px 10px;
+  border:1px solid #314158;
+  border-radius:5px;
+  background:#172333;
+  color:#b9c7d9;
+  font-size:10px
+}
+.boton-accion-php:hover {
+  border-color:#5b9cff;
+  color:#fff
+}
+.boton-accion-proyecto {
+  min-height:32px;
+  padding:7px 10px;
+  border:1px solid #314158;
+  border-radius:5px;
+  background:#172333;
+  color:#b9c7d9;
+  font-size:10px
+}
+.boton-accion-proyecto:hover {
+  border-color:#5b9cff;
+  color:#fff
+}
+.boton-accion-proyecto-peligro {
+  border-color:#68433b;
+  background:#261916;
+  color:#ffb3a4
+}
+.boton-accion-proyecto-peligro:hover {
+  border-color:#9a5144;
+  background:#39211e
+}
+.tecnologia-activa .boton-accion-proyecto {
+  margin-top:4px
+}
+.boton-accion-php.accion-php-detener {
+  border-color:#68433b;
+  color:#ffac9c
+}
+.boton-accion-php.accion-php-detener:hover {
+  background:#39211e
+}
+.dialogo-compose,.dialogo-despliegue {
+  width:min(100% - 28px,850px);
+  max-height:90vh;
+  padding:0;
+  border:1px solid #304157;
+  border-radius:12px;
+  background:#111925;
+  color:var(--texto);
+  box-shadow:0 24px 80px #0009
+}
+.dialogo-compose::backdrop,.dialogo-despliegue::backdrop {
+  background:#05080dcc;
+  backdrop-filter:blur(3px)
+}
+.dialogo-compose-contenido,.dialogo-despliegue form {
+  padding:22px
+}
+.dialogo-compose-contenido .eyebrow,.dialogo-despliegue .eyebrow {
+  margin:0 0 9px
+}
+.dialogo-compose-contenido h2,.dialogo-despliegue h2 {
+  margin:0 0 14px;
+  font-size:17px
+}
+.dialogo-compose pre,.dialogo-despliegue pre {
+  max-height:35vh;
+  overflow:auto;
+  margin:10px 0 0;
+  padding:12px;
+  border:1px solid #263549;
+  border-radius:7px;
+  background:#0a1018;
+  color:#c6d2e1;
+  font:10px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere
+}
+.dialogo-compose-contenido>button {
+  min-height:34px;
+  padding:8px 13px;
+  border-radius:6px;
+  font-size:10px
+}
+.dialogo-despliegue>form>p:not(.eyebrow):not(.error-confirmacion) {
+  color:#a0adbf;
+  font-size:11px;
+  line-height:1.6
+}
+.detalles-despliegue {
+  padding-left:20px;
+  color:#a0adbf;
+  font-size:10px;
+  line-height:1.7
+}
+.dialogo-despliegue label {
+  display:block;
+  margin:17px 0 7px;
+  color:#b3c0d1;
+  font-size:11px
+}
+.dialogo-despliegue input,.dialogo-despliegue select {
+  width:100%;
+  height:39px;
+  padding:0 10px;
+  border:1px solid #34475e;
+  border-radius:6px;
+  background:#0d141e;
+  color:var(--texto);
+  font:inherit;
+  font-size:11px
+}
+.dialogo-despliegue input:focus,.dialogo-despliegue select:focus {
+  outline:1px solid #5b9cff;
+  border-color:#5b9cff
+}
+.ayuda-perfil-runtime {
+  margin:7px 0 0;
+  color:#a0adbf;
+  font-size:10px;
+  line-height:1.55
+}
+.dialogo-despliegue .acciones-dialogo {
+  display:flex;
+  justify-content:flex-end;
+  gap:9px;
+  margin-top:17px
+}
+.dialogo-despliegue .acciones-dialogo button {
+  min-height:35px;
+  padding:8px 13px;
+  border-radius:6px;
+  font-size:10px
+}
+.dialogo-despliegue .boton-primario:disabled {
+  opacity:.45;
+  cursor:not-allowed
+}

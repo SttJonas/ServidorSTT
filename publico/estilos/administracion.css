@@ -1,0 +1,401 @@
+.seccion-administracion
+{
+    display:grid;
+    gap:16px
+}
+.seccion-administracion[hidden]
+{
+    display:none
+}
+.panel-administracion
+{
+    padding:19px
+}
+.rejilla-administracion
+{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));
+    gap:10px;
+    margin-top:16px
+}
+.dato-administracion {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px;
+  border: 1px solid #263549;
+  border-radius: 8px;
+  background: #0d141e;
+}
+
+.dato-administracion-titulo {
+  color: #92a2b7;
+  font-size: 10px;
+}
+
+.dato-administracion strong {
+  color: #e2eaf4;
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.dato-administracion small {
+  color: #8292a7;
+  font-size: 10px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.estado-administracion {
+  grid-column: 1 / -1;
+  color: #a0adbf;
+  font-size: 12px;
+}
+
+.panel-nota-administracion strong {
+  color: #d7e2f0;
+  font-size: 12px;
+}
+
+.panel-nota-administracion p {
+  max-width: 900px;
+  margin: 8px 0 0;
+  color: #9caabd;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.acciones-administracion {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.acciones-administracion button {
+  min-height: 36px;
+  padding: 8px 13px;
+  border: 1px solid #68433b;
+  border-radius: 6px;
+  background: #261916;
+  color: #ffb3a4;
+  font-size: 11px;
+}
+
+.acciones-administracion button:hover {
+  background: #39211e;
+}
+
+.formulario-perfil,
+.formulario-invitacion {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  align-items: center;
+  gap: 10px 16px;
+  margin-top: 18px;
+}
+
+.formulario-perfil label,
+.formulario-invitacion label,
+.resultado-invitacion label {
+  color: #b3c0d1;
+  font-size: 11px;
+}
+
+.formulario-perfil label span {
+  color: #8292a7;
+  font-weight: 400;
+}
+
+.formulario-perfil input,
+.formulario-invitacion input,
+.formulario-invitacion select,
+.resultado-invitacion input {
+  width: 100%;
+  min-width: 0;
+  height: 39px;
+  padding: 0 10px;
+  border: 1px solid #34475e;
+  border-radius: 6px;
+  background: #0d141e;
+  color: var(--texto);
+  font: inherit;
+  font-size: 11px;
+}
+
+.formulario-perfil input:focus,
+.formulario-invitacion input:focus,
+.formulario-invitacion select:focus,
+.resultado-invitacion input:focus {
+  outline: 1px solid #5b9cff;
+  border-color: #5b9cff;
+}
+
+.formulario-perfil input[readonly] {
+  color: #8292a7;
+}
+
+.perfil-foto {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 14px;
+}
+
+.perfil-foto-controles {
+  display: grid;
+  min-width: 0;
+  gap: 8px;
+}
+
+.perfil-foto-controles small {
+  color: #8292a7;
+  font-size: 10px;
+}
+
+.perfil-foto-controles #estado-foto-perfil {
+  color: #aab8ca;
+  line-height: 1.5;
+}
+
+.entrada-foto-perfil {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.formulario-perfil .entrada-foto-perfil {
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+}
+
+.boton-elegir-foto {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  justify-self: start;
+  padding: 7px 11px;
+  border: 1px solid #34475e;
+  border-radius: 6px;
+  background: #172333;
+  color: #c5d3e3;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.formulario-perfil .boton-elegir-foto {
+  color: #c5d3e3;
+}
+
+.boton-elegir-foto:hover,
+.entrada-foto-perfil:focus-visible + .boton-elegir-foto {
+  border-color: #5b9cff;
+  background: #202d3e;
+  color: #fff;
+}
+
+.avatar-grande {
+  width: 72px;
+  height: 72px;
+  flex: 0 0 72px;
+  background-position: center;
+  background-size: cover;
+  font-size: 24px;
+}
+
+.perfil-foto-controles button {
+  justify-self: start;
+  min-height: 32px;
+  margin: 0;
+  padding: 6px 10px;
+  font-size: 11px;
+}
+
+.perfil-foto-controles button[hidden] {
+  display: none;
+}
+
+.acciones-perfil {
+  display: flex;
+  flex-wrap: wrap;
+  grid-column: 1 / -1;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.acciones-perfil button,
+.formulario-invitacion button {
+  min-height: 36px;
+  margin: 0;
+  padding: 8px 13px;
+  border-radius: 6px;
+  font-size: 11px;
+}
+
+.mensaje-perfil {
+  grid-column: 1 / -1;
+  min-height: 16px;
+  margin: 0;
+  color: #9fdbb7;
+  font-size: 11px;
+}
+
+.mensaje-error {
+  color: #ff9289;
+}
+
+.formulario-invitacion {
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
+}
+
+.formulario-invitacion label {
+  grid-column: 1;
+}
+
+.formulario-invitacion input,
+.formulario-invitacion select {
+  grid-column: 1;
+}
+
+.formulario-invitacion button {
+  grid-column: 1;
+}
+
+.resultado-invitacion {
+  margin-top: 14px;
+  padding: 13px;
+  border: 1px solid #2b4a6e;
+  border-radius: 7px;
+  background: #102033;
+}
+
+.resultado-invitacion input {
+  margin-top: 8px;
+}
+
+.resultado-invitacion p {
+  margin: 8px 0 0;
+  color: #a9c4e7;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.panel-cuentas h4 {
+  margin: 20px 0 10px;
+  color: #d7e2f0;
+  font-size: 12px;
+}
+
+.lista-cuentas {
+  display: grid;
+  gap: 8px;
+}
+
+.fila-cuenta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 12px;
+  border: 1px solid #263549;
+  border-radius: 7px;
+  background: #0d141e;
+}
+
+.fila-cuenta strong,
+.fila-cuenta small {
+  display: block;
+}
+
+.fila-cuenta strong {
+  color: #e2eaf4;
+  font-size: 11px;
+}
+
+.fila-cuenta small {
+  margin-top: 4px;
+  color: #8292a7;
+  font-size: 10px;
+}
+
+.boton-cuenta {
+  flex: none;
+  min-height: 30px;
+  padding: 6px 9px;
+  border: 1px solid #68433b;
+  border-radius: 5px;
+  background: #261916;
+  color: #ffb3a4;
+  font-size: 9px;
+}
+
+.boton-cuenta:hover {
+  background: #39211e;
+}
+
+.boton-cuenta:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+@media (max-width: 600px) {
+  .panel-administracion {
+    padding: 14px;
+  }
+
+  .rejilla-administracion {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .dato-administracion {
+    padding: 11px;
+  }
+
+  .dato-administracion strong {
+    font-size: 12px;
+  }
+
+  .formulario-perfil {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 7px;
+  }
+
+  .formulario-perfil label:not(:first-child) {
+    margin-top: 8px;
+  }
+
+  .acciones-perfil {
+    justify-content: stretch;
+    margin-top: 12px;
+  }
+
+  .acciones-perfil button {
+    flex: 1;
+  }
+
+  .formulario-invitacion {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .formulario-invitacion button,
+  .formulario-invitacion input,
+  .formulario-invitacion select {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .fila-cuenta {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

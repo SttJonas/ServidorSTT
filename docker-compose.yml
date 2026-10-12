@@ -1,0 +1,81 @@
+services:
+  php-cuentas:
+    build:
+      context: ./php-cuentas
+      dockerfile: Dockerfile
+    environment:
+      CUENTAS_API_SECRETO: "${CUENTAS_API_SECRETO:?Genera CUENTAS_API_SECRETO con npm run configurar-cuentas-php}"
+      CUENTAS_DB: /var/lib/swatt-cuentas/cuentas.sqlite
+      ADMIN_USERNAME: "${ADMIN_USERNAME:?Configura ADMIN_USERNAME en .env}"
+      ADMIN_PASSWORD_HASH: "${ADMIN_PASSWORD_HASH:?Configura ADMIN_PASSWORD_HASH en .env}"
+    volumes:
+      - cuentas-php:/var/lib/swatt-cuentas
+    expose:
+      - "8080"
+    command: ["/bin/sh", "-c", "umask 077 && mkdir -p /tmp/apache2 && exec apache2-foreground"]
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m,mode=1777
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    mem_limit: 256m
+    cpus: 0.5
+    pids_limit: 64
+    networks:
+      - cuentas
+    healthcheck:
+      test:
+        - CMD
+        - php
+        - -r
+        - 'umask(0077); $$_SERVER["REQUEST_METHOD"]="GET"; $$_SERVER["REQUEST_URI"]="/health"; include "/var/www/html/index.php";'
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  panel:
+    # Construye el contenedor usando el Dockerfile de este proyecto.
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # Usa el UID/GID de la cuenta de servicio para acceder a los datos persistentes.
+    user: "${PANEL_UID:-1000}:${PANEL_GID:-1000}"
+    # Permite cambiar el puerto sin modificar este archivo.
+    ports:
+      - "127.0.0.1:${PUERTO:-3000}:3000"
+    # Permite leer solo el informe de métricas compartido por el agente del host.
+    volumes:
+      # Monta el directorio completo para que el contenedor vea sockets recreados por systemd.
+      - /run/swatt-monitor:/run/swatt-monitor:ro
+      - ${RUTA_PROYECTOS:-./proyectos}:/app/proyectos
+      # El JSON histórico solo se lee para migrarlo a SQLite.
+      - ${RUTA_DATOS_PANEL:-./datos}:/var/lib/swatt-panel:ro
+    environment:
+      DIRECTORIO_PROYECTOS: /app/proyectos
+      ARCHIVO_USUARIOS: /var/lib/swatt-panel/usuarios.json
+      CUENTAS_API_SECRETO: "${CUENTAS_API_SECRETO:?Genera CUENTAS_API_SECRETO con npm run configurar-cuentas-php}"
+    # Añade al proceso el grupo requerido para el socket limitado del agente.
+    group_add:
+      - "${DOCKER_GID:?Agrega DOCKER_GID al archivo .env del servidor}"
+    depends_on:
+      php-cuentas:
+        condition: service_healthy
+    networks:
+      - default
+      - cuentas
+    # Inyecta la configuración de acceso protegida en el archivo local .env.
+    env_file:
+      - .env
+    # Reinicia el panel si el proceso se detiene inesperadamente.
+    restart: unless-stopped
+
+volumes:
+  cuentas-php:
+
+networks:
+  cuentas:
+    internal: true

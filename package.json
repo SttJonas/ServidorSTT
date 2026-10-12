@@ -1,0 +1,21 @@
+{
+  "name": "panel-servidor",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Panel web privado para administrar aplicaciones y servicios en Debian.",
+  "type": "module",
+  "scripts": {
+    "desarrollo": "node src/servidor.js",
+    "inicio": "node src/servidor.js",
+    "configurar-acceso": "node scripts/configurar-acceso.js",
+    "configurar-cuentas-php": "node scripts/configurar-cuentas-php.js",
+    "pruebas-php": "php php-cuentas/pruebas/seguridad.php",
+    "pruebas": "node --test"
+  },
+  "dependencies": {
+    "@xterm/addon-fit": "^0.11.0",
+    "@xterm/xterm": "^6.0.0",
+    "express": "^5.1.0",
+    "ws": "^8.22.0"
+  }
+}
