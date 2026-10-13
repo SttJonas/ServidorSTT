@@ -9,6 +9,37 @@ administrador, la cuenta de servicio, el nombre de host, el dominio y las
 carpetas según tu instalación. Los valores de ejemplo son genéricos y se deben
 reemplazar por los propios.
 
+## Capturas de la interfaz
+
+Estas imágenes muestran el panel en funcionamiento. Las métricas corresponden
+al momento de la captura y pueden variar; las pantallas sin proyectos o bases
+desplegados ilustran el estado vacío de una instalación.
+
+### Resumen del servidor
+
+Vista general con métricas del host, estado de Docker y accesos rápidos a
+proyectos.
+
+![Resumen del servidor con métricas del host y accesos principales](documentacion/capturas/resumen-servidor.png)
+
+### Proyectos
+
+Formulario para importar un repositorio público y lista de proyectos importados.
+La importación deja el código pendiente de revisión y no lo despliega
+automáticamente.
+
+![Sección Proyectos con el formulario de importación y el estado vacío](documentacion/capturas/proyectos.png)
+
+### Lenguajes y bases de datos
+
+Estado de aplicaciones y bases administradas, seguido del catálogo de perfiles
+de aplicación y motores disponibles. Las dos capturas muestran la sección
+completa al desplazarse por ella.
+
+![Estado de aplicaciones y servicios de bases de datos](documentacion/capturas/lenguajes-y-bases.png)
+
+![Catálogo de perfiles de aplicación y motores de bases de datos](documentacion/capturas/perfiles-y-motores.png)
+
 El código fuente de este repositorio puede consultarse, descargarse, clonarse,
 copiarse y modificarse libremente de acuerdo con la licencia del proyecto. Las
 siguientes advertencias se refieren a ejecutar una instancia del panel y
@@ -100,6 +131,7 @@ publicarlas es una tarea aparte.
 ├── agente/monitor_host.py             # Agente Python del host y operaciones Docker acotadas
 ├── configuracion/entorno.js           # Carga y validación de configuración del panel
 ├── despliegue/swatt-monitor.service   # Unidad systemd de ejemplo para el agente
+├── documentacion/capturas/             # Imágenes de referencia de las secciones del panel
 ├── scripts/configurar-acceso.js       # Crea la configuración privada y el hash inicial
 ├── php-cuentas/
 │   ├── Dockerfile                     # Servicio PHP 8.3 + Apache, con PDO SQLite
