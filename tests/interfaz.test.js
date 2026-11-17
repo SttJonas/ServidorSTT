@@ -212,6 +212,16 @@ test("el README explica una instalación genérica y no contiene datos del host"
   assert.match(readme, /DOCKER_GID/);
   assert.match(readme, /DATABASE_URL_FILE/);
   assert.match(readme, /8 GiB de RAM/);
+  assert.ok(readme.includes("## Capturas de la interfaz"));
+  for (const captura of [
+    "resumen-servidor.png",
+    "proyectos.png",
+    "lenguajes-y-bases.png",
+    "perfiles-y-motores.png",
+  ]) {
+    assert.ok(readme.includes(`documentacion/capturas/${captura}`));
+    await access(path.join(directorioProyecto, "documentacion", "capturas", captura));
+  }
   assert.match(readme, /Fail2ban/);
   assert.match(readme, /reserva DHCP/);
   assert.match(readme, /sudo nmcli device wifi rescan/);
